@@ -79,6 +79,17 @@ button{
     margin:2px;
     height: 50px;
 }
+.backbtn{
+  display: block;
+  margin-top: 10px;
+  margin-left: 10px;
+  border: 0px;
+  border-radius: 7px;
+  height: 30px;
+  width: 80px;
+  background-color: rgb(66, 191, 233);
+  color: white;
+}
 @media screen and (max-width: 736px) {
   .tablebody {
     width: 100%;

@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addTask, setEditId, clearTasks } from "../../features/task/taskSlice";
 import type { RootState } from "../../app/store";
+import { useNavigate,useLocation } from "react-router-dom";
 
 // type alias
 type mystr = string;
@@ -18,15 +19,28 @@ interface Task {
 
 const Form = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const { taskitems, editId } = useSelector((state: RootState) => state.task);
-
   useEffect(() => {
-    const form = document.getElementsByClassName("formcls",)[0] as HTMLFormElement;
-    form.reset();
-    const statusSelect = document.getElementById("status") as HTMLSelectElement;
-    statusSelect.value = "Select";
-  }, [taskitems]);
+    console.log(location);
+    if (editId) {
+      console.log("edit clicked for " + localStorage.getItem(editId));
+      const task = taskitems[editId];
+      (document.getElementById("taskname") as HTMLInputElement).value =task.taskname;
+      (document.getElementById("date") as HTMLInputElement).value = task.date;
+      (document.getElementById("time") as HTMLInputElement).value = task.time;
+      (document.getElementById("status") as HTMLSelectElement).value =task.status;
+      (document.getElementById("description") as HTMLTextAreaElement).value =task.description;
+    }
+    else{
+        const form = document.getElementsByClassName("formcls",)[0] as HTMLFormElement;
+        form.reset();
+        const statusSelect = document.getElementById("status") as HTMLSelectElement;
+        statusSelect.value = "Select";
+      }
+  }, [editId, taskitems]);
 
   const clear = () => {
     localStorage.clear();
@@ -84,9 +98,14 @@ const Form = () => {
     };
 
     localStorage.setItem(id, JSON.stringify(newtask));
+    sessionStorage.setItem(id, JSON.stringify(newtask));
 
     dispatch(addTask({ id, task: newtask }));
     dispatch(setEditId(null));
+    //pushstate is default
+    navigate("/table");
+    //replaceState()
+    //navigate("/table",{replace:true});
   };
 
   return (
@@ -117,10 +136,12 @@ const Form = () => {
       <textarea id="description" placeholder="Add description.." />
       <br />
     </form>
-      <button  className="savebtn" onClick={savetask}>
+    
+      <button  className="savebtn" onClick={savetask} >
         Save
       </button>
-
+      
+       
       <button  className="clearbtn" onClick={clear}>
         Clear all
       </button>

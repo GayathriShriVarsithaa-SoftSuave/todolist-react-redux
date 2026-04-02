@@ -16,23 +16,27 @@ interface TaskState {
   taskitems: TaskMap;
   editId: string | null;
 }
+const existingTask: TaskMap = {};
+Object.keys(localStorage).map((key)=>{
+    existingTask[key] = JSON.parse(localStorage.getItem(key) || "{}");
+});
 
 const initialState: TaskState = {
-  taskitems: {},
+  taskitems: existingTask,
   editId: null,
 };
-
+ 
 const taskSlice = createSlice({name: "task",initialState,reducers: {
-    addTask: (state,action: PayloadAction<{ id: string; task: Task }>) => {
+    addTask: (state,action:PayloadAction<{ id: string; task: Task }>) => {
       state.taskitems[action.payload.id] = action.payload.task;
     },
 
-    deleteTask: (state, action: PayloadAction<string>) => {
+    deleteTask: (state, action:PayloadAction<string>) => {
       delete state.taskitems[action.payload];
     },
 
-    setEditId: (state,action: PayloadAction<string | null>) => {
-      state.editId = action.payload;
+    setEditId: (state,action:PayloadAction<string | null>) => {
+      state.editId = action.payload;  
     },
 
     clearTasks: (state) => {
