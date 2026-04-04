@@ -1,5 +1,5 @@
 .tablebody {
-  width: 60%;
+  width: 100%;
   height:800px;
   overflow-y: auto;
 }
@@ -88,6 +88,21 @@ button{
   height: 30px;
   width: 80px;
   background-color: rgb(66, 191, 233);
+  color: white;
+}
+.buttons{
+  display: flex;
+  justify-content: space-between;
+}
+.buttons .logout{
+  display: block;
+  margin-top: 10px;
+  margin-right: 10px;
+  border: 0px;
+  border-radius: 7px;
+  height: 30px;
+  width: 80px;
+  background-color: rgb(233, 88, 66);
   color: white;
 }
 @media screen and (max-width: 736px) {

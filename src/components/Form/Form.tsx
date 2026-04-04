@@ -1,7 +1,7 @@
 import "./Form.css";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addTask, setEditId, clearTasks } from "../../features/task/taskSlice";
+import { addTask, setEditId, clearTasks,loginval } from "../../features/task/taskSlice";
 import type { RootState } from "../../app/store";
 import { useNavigate,useLocation } from "react-router-dom";
 
@@ -22,7 +22,7 @@ const Form = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { taskitems, editId } = useSelector((state: RootState) => state.task);
+  const { taskitems, editId,login } = useSelector((state: RootState) => state.task);
   useEffect(() => {
     console.log(location);
     if (editId) {
@@ -103,13 +103,24 @@ const Form = () => {
     dispatch(addTask({ id, task: newtask }));
     dispatch(setEditId(null));
     //pushstate is default
-    navigate("/table");
+    if(login ){
+      navigate("/table");
+    }
+    else{
+      navigate("*");
+    }
+    //navigate("/table");
     //replaceState()
     //navigate("/table",{replace:true});
   };
+  const logout=()=>{
+    dispatch(loginval());
+    navigate('/');
+  }
 
   return (
    <div className="formbody">
+    
     <p className="form-title">Add Task</p>
 
     <form className="formcls" onSubmit={savetask}>
@@ -145,6 +156,9 @@ const Form = () => {
       <button  className="clearbtn" onClick={clear}>
         Clear all
       </button>
+      <button className="logoutbtn" onClick={logout}>
+      Logout
+    </button>
       
    
     </div>

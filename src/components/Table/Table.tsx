@@ -1,6 +1,6 @@
 import "./Table.css";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteTask, setEditId } from "../../features/task/taskSlice";
+import { deleteTask, setEditId,loginval } from "../../features/task/taskSlice";
 import type { RootState } from "../../app/store";
 import { useNavigate } from "react-router-dom";
 
@@ -25,12 +25,18 @@ const Table = () => {
     navigate("/");
     //navigate(-1);
   }
-
+const logout=()=>{
+  dispatch(loginval());
+  navigate('/');
+}
   return (
     <div className="tablebody">
+      <div className="buttons">
       <button className="backbtn" onClick={backpage}>
         Back
       </button>
+      <button className="logout" onClick={logout}>Logout</button>
+</div>
       <table className="tablecls">
         <thead>
           <tr className="headrow">

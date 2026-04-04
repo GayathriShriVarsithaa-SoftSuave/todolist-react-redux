@@ -15,6 +15,7 @@ type TaskMap = {
 interface TaskState {
   taskitems: TaskMap;
   editId: string | null;
+  login:boolean;
 }
 const existingTask: TaskMap = {};
 Object.keys(localStorage).map((key)=>{
@@ -24,6 +25,7 @@ Object.keys(localStorage).map((key)=>{
 const initialState: TaskState = {
   taskitems: existingTask,
   editId: null,
+  login:false,
 };
  
 const taskSlice = createSlice({name: "task",initialState,reducers: {
@@ -42,8 +44,12 @@ const taskSlice = createSlice({name: "task",initialState,reducers: {
     clearTasks: (state) => {
       state.taskitems = {};
     },
+
+    loginval:(state) => {
+      state.login=!(state.login);
+    }
   },
 });
 
-export const {addTask,deleteTask,setEditId,clearTasks,} = taskSlice.actions;
+export const {addTask,deleteTask,setEditId,clearTasks,loginval} = taskSlice.actions;
 export default taskSlice.reducer;

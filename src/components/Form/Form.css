@@ -1,5 +1,5 @@
 .formbody {
-  width: 40%;
+  width: 60%;
 }
 .formbody .formcls {
   width: 90%;
@@ -63,6 +63,16 @@ select {
   color: black;
   font-size: 15px;
   margin-left: 10px;
+}
+.logoutbtn{
+  display: block;
+  border: 0px;
+  border-radius: 7px;
+   margin: 20px auto;
+  height: 30px;
+  width: 80px;
+  background-color: rgb(233, 88, 66);
+  color: white;
 }
 @media screen and (max-width: 736px) {
   .formbody {
