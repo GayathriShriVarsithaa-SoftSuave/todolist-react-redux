@@ -98,7 +98,6 @@ const Form = () => {
     };
 
     localStorage.setItem(id, JSON.stringify(newtask));
-    sessionStorage.setItem(id, JSON.stringify(newtask));
 
     dispatch(addTask({ id, task: newtask }));
     dispatch(setEditId(null));
