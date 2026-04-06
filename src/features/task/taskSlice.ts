@@ -30,10 +30,12 @@ const initialState: TaskState = {
  
 const taskSlice = createSlice({name: "task",initialState,reducers: {
     addTask: (state,action:PayloadAction<{ id: string; task: Task }>) => {
+    localStorage.setItem(action.payload.id, JSON.stringify(action.payload.task));
       state.taskitems[action.payload.id] = action.payload.task;
     },
 
     deleteTask: (state, action:PayloadAction<string>) => {
+      localStorage.removeItem(action.payload);
       delete state.taskitems[action.payload];
     },
 
@@ -42,6 +44,7 @@ const taskSlice = createSlice({name: "task",initialState,reducers: {
     },
 
     clearTasks: (state) => {
+      localStorage.clear();
       state.taskitems = {};
     },
 

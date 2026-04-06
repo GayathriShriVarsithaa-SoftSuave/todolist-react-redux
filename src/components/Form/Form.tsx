@@ -43,7 +43,6 @@ const Form = () => {
   }, [editId, taskitems]);
 
   const clear = () => {
-    localStorage.clear();
     dispatch(clearTasks());
   };
 
@@ -97,7 +96,6 @@ const Form = () => {
       description,
     };
 
-    localStorage.setItem(id, JSON.stringify(newtask));
 
     dispatch(addTask({ id, task: newtask }));
     dispatch(setEditId(null));

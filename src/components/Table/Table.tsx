@@ -15,7 +15,7 @@ const Table = () => {
 
   const deletetask = (id: string) => {
     return () => {
-      localStorage.removeItem(id);
+      
       dispatch(deleteTask(id));
       dispatch(setEditId(null));
     };

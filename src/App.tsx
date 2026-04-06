@@ -38,7 +38,7 @@ function App() {
     <div>
       <Suspense fallback={<div className="load"><h1>Loading...</h1></div>}>
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={login ? <LazyForm /> : <Login />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/" element={<LazyForm />} />
           <Route path="/form" element={<LazyForm />} />
