@@ -1,6 +1,6 @@
 import "./Table.css";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteTask, setEditId,loginval } from "../../features/task/taskSlice";
+import { deleteTask, setEditId,loginval,clearTasks } from "../../features/task/taskSlice";
 import type { RootState } from "../../app/store";
 import { useNavigate } from "react-router-dom";
 
@@ -20,7 +20,9 @@ const Table = () => {
       dispatch(setEditId(null));
     };
   };
-
+  const clearall = () => {
+   dispatch(clearTasks());
+  }
   const backpage = () => {
     navigate("/");
     //navigate(-1);
@@ -88,6 +90,7 @@ const logout=()=>{
           })}
         </tbody>
       </table>
+      <button className="clrbtn" onClick={clearall}>Clear all</button>
     </div>
   );
 };

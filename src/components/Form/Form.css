@@ -1,12 +1,11 @@
 .formbody {
-  width: 60%;
+  width: 100%;
 }
 .formbody .formcls {
   width: 90%;
   background-color: white;
   border-radius: 20px;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin: 20px auto;
   padding-top: 15px;
 }
 .formbody .formcls input,
@@ -14,7 +13,7 @@ select {
   background-color: rgb(247, 240, 249);
   border: 0px;
   color: black;
-  width: 85%;
+  width: 90%;
   margin-top: 40px;
   margin-left: 10px;
   margin-bottom: 40px;
@@ -25,7 +24,7 @@ select {
   background-color: rgb(247, 240, 249);
   border: 0px;
   color: black;
-  width: 90%;
+  width: 95%;
   margin-top: 40px;
   margin-left: 10px;
   margin-bottom: 40px;
@@ -49,7 +48,7 @@ select {
   background-color: rgb(66, 191, 233);
   color: white;
 }
-.formbody .clearbtn {
+.formbody .resetbtn {
   display: block;
   border: 0px;
   border-radius: 7px;

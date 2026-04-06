@@ -42,8 +42,9 @@ const Form = () => {
       }
   }, [editId, taskitems]);
 
-  const clear = () => {
-    dispatch(clearTasks());
+  const reset = () => {
+     const form = document.getElementsByClassName("formcls",)[0] as HTMLFormElement;
+        form.reset();
   };
 
   const savetask = (e: React.FormEvent) => {
@@ -140,7 +141,7 @@ const Form = () => {
         <option value="completed">Completed</option>
       </select><br />
 
-      <label htmlFor="description">Description:</label>
+      <label htmlFor="description">Description:</label><br></br>
       <textarea id="description" placeholder="Add description.." />
       <br />
     </form>
@@ -150,8 +151,8 @@ const Form = () => {
       </button>
       
        
-      <button  className="clearbtn" onClick={clear}>
-        Clear all
+      <button  className="resetbtn" onClick={reset}>
+        Reset
       </button>
       <button className="logoutbtn" onClick={logout}>
       Logout

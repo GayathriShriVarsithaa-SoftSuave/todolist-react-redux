@@ -7,6 +7,7 @@ import { lazy,Suspense } from "react";
 import { useSelector } from "react-redux";
 import type { RootState } from "./app/store";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Greet from "./components/Greet";
 const LazyForm = lazy(() => import("./components/Form/Form"));
 const LazyTable = lazy(() => import("./components/Table/Table"));
 const Notfound = lazy(() => import("./components/Notfound/Notfound"));
@@ -45,7 +46,7 @@ function App() {
           <Route path="/table" element={<LazyTable />} />
         </Route>
         <Route path="*" element={<Notfound />} />
-
+        <Route path="/greet/:name" element={<Greet />} />
       </Routes>
       </Suspense>
     </div>

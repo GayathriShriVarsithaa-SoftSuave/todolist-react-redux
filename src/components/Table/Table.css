@@ -105,6 +105,17 @@ button{
   background-color: rgb(233, 88, 66);
   color: white;
 }
+.tablebody .clrbtn {
+  display: block;
+  border: 0px;
+  border-radius: 7px;
+  margin-left: 80%;
+  margin-right: 10%;
+  height: 30px;
+  width: 80px;
+  background-color: rgb(233, 88, 66);
+  color: white;
+}
 @media screen and (max-width: 736px) {
   .tablebody {
     width: 100%;
