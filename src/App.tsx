@@ -6,6 +6,7 @@ import {Route,Routes} from "react-router-dom";
 import { lazy,Suspense } from "react";
 import { useSelector } from "react-redux";
 import type { RootState } from "./app/store";
+import ProtectedRoute from "./components/ProtectedRoute";
 const LazyForm = lazy(() => import("./components/Form/Form"));
 const LazyTable = lazy(() => import("./components/Table/Table"));
 const Notfound = lazy(() => import("./components/Notfound/Notfound"));
@@ -24,14 +25,28 @@ function App() {
     //   {/* <Table/> */}
     // </div>
 
+    // <div>
+    //   <Suspense fallback={<div className="load"><h1>Loading...</h1></div>}>
+    //     <Routes>
+    //       <Route path="/" element={login ? <LazyForm /> : <Login />} />
+    //       <Route path="/form" element={login ? <LazyForm /> : <Login />} />
+    //       <Route path="/table" element={login ? <LazyTable /> : <Login />} />
+    //       <Route path="*" element={<Notfound />} />
+    //     </Routes>
+    //   </Suspense>
+    // </div>
     <div>
       <Suspense fallback={<div className="load"><h1>Loading...</h1></div>}>
-        <Routes>
-          <Route path="/" element={login ? <LazyForm /> : <Login />} />
-          <Route path="/form" element={login ? <LazyForm /> : <Login />} />
-          <Route path="/table" element={login ? <LazyTable /> : <Login />} />
-          <Route path="*" element={<Notfound />} />
-        </Routes>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/" element={<LazyForm />} />
+          <Route path="/form" element={<LazyForm />} />
+          <Route path="/table" element={<LazyTable />} />
+        </Route>
+        <Route path="*" element={<Notfound />} />
+
+      </Routes>
       </Suspense>
     </div>
   );
