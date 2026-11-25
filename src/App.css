@@ -13,6 +13,10 @@ body {
   height: auto;
   width: 100%;
 }
+.load{
+  text-align: center;
+  margin-top: 100px;
+}
 @media screen and (max-width: 736px) {
   .appbody {
     flex-direction: column;

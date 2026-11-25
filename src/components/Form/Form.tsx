@@ -1,8 +1,9 @@
 import "./Form.css";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addTask, setEditId, clearTasks } from "../../features/task/taskSlice";
+import { addTask, setEditId, clearTasks,loginval } from "../../features/task/taskSlice";
 import type { RootState } from "../../app/store";
+import { useNavigate,useLocation } from "react-router-dom";
 
 // type alias
 type mystr = string;
@@ -18,19 +19,32 @@ interface Task {
 
 const Form = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const { taskitems, editId } = useSelector((state: RootState) => state.task);
-
+  const { taskitems, editId,login } = useSelector((state: RootState) => state.task);
   useEffect(() => {
-    const form = document.getElementsByClassName("formcls",)[0] as HTMLFormElement;
-    form.reset();
-    const statusSelect = document.getElementById("status") as HTMLSelectElement;
-    statusSelect.value = "Select";
-  }, [taskitems]);
+    console.log(location);
+    if (editId) {
+      console.log("edit clicked for " + localStorage.getItem(editId));
+      const task = taskitems[editId];
+      (document.getElementById("taskname") as HTMLInputElement).value =task.taskname;
+      (document.getElementById("date") as HTMLInputElement).value = task.date;
+      (document.getElementById("time") as HTMLInputElement).value = task.time;
+      (document.getElementById("status") as HTMLSelectElement).value =task.status;
+      (document.getElementById("description") as HTMLTextAreaElement).value =task.description;
+    }
+    else{
+        const form = document.getElementsByClassName("formcls",)[0] as HTMLFormElement;
+        form.reset();
+        const statusSelect = document.getElementById("status") as HTMLSelectElement;
+        statusSelect.value = "Select";
+      }
+  }, [editId, taskitems]);
 
-  const clear = () => {
-    localStorage.clear();
-    dispatch(clearTasks());
+  const reset = () => {
+     const form = document.getElementsByClassName("formcls",)[0] as HTMLFormElement;
+        form.reset();
   };
 
   const savetask = (e: React.FormEvent) => {
@@ -83,14 +97,28 @@ const Form = () => {
       description,
     };
 
-    localStorage.setItem(id, JSON.stringify(newtask));
 
     dispatch(addTask({ id, task: newtask }));
     dispatch(setEditId(null));
+    //pushstate is default
+    if(login ){
+      navigate("/table");
+    }
+    else{
+      navigate("*");
+    }
+    //navigate("/table");
+    //replaceState()
+    //navigate("/table",{replace:true});
   };
+  const logout=()=>{
+    dispatch(loginval());
+    navigate('/');
+  }
 
   return (
    <div className="formbody">
+    
     <p className="form-title">Add Task</p>
 
     <form className="formcls" onSubmit={savetask}>
@@ -113,17 +141,22 @@ const Form = () => {
         <option value="completed">Completed</option>
       </select><br />
 
-      <label htmlFor="description">Description:</label>
+      <label htmlFor="description">Description:</label><br></br>
       <textarea id="description" placeholder="Add description.." />
       <br />
     </form>
-      <button  className="savebtn" onClick={savetask}>
+    
+      <button  className="savebtn" onClick={savetask} >
         Save
       </button>
-
-      <button  className="clearbtn" onClick={clear}>
-        Clear all
+      
+       
+      <button  className="resetbtn" onClick={reset}>
+        Reset
       </button>
+      <button className="logoutbtn" onClick={logout}>
+      Logout
+    </button>
       
    
     </div>

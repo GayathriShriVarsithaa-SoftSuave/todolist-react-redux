@@ -15,31 +15,45 @@ type TaskMap = {
 interface TaskState {
   taskitems: TaskMap;
   editId: string | null;
+  login:boolean;
 }
+const existingTask: TaskMap = {};
+Object.keys(localStorage).map((key)=>{
+    existingTask[key] = JSON.parse(localStorage.getItem(key) || "{}");
+});
+const existingLogin: boolean = sessionStorage.getItem("loginvalue") === "true";
 
 const initialState: TaskState = {
-  taskitems: {},
+  taskitems: existingTask,
   editId: null,
-};
-
+  login:existingLogin}
+ 
 const taskSlice = createSlice({name: "task",initialState,reducers: {
-    addTask: (state,action: PayloadAction<{ id: string; task: Task }>) => {
+    addTask: (state,action:PayloadAction<{ id: string; task: Task }>) => {
+    localStorage.setItem(action.payload.id, JSON.stringify(action.payload.task));
       state.taskitems[action.payload.id] = action.payload.task;
     },
 
-    deleteTask: (state, action: PayloadAction<string>) => {
+    deleteTask: (state, action:PayloadAction<string>) => {
+      localStorage.removeItem(action.payload);
       delete state.taskitems[action.payload];
     },
 
-    setEditId: (state,action: PayloadAction<string | null>) => {
-      state.editId = action.payload;
+    setEditId: (state,action:PayloadAction<string | null>) => {
+      state.editId = action.payload;  
     },
 
     clearTasks: (state) => {
+      localStorage.clear();
       state.taskitems = {};
     },
+
+    loginval:(state) => {
+      sessionStorage.setItem("loginvalue",(!state.login).toString());
+      state.login=!(state.login);
+    }
   },
 });
 
-export const {addTask,deleteTask,setEditId,clearTasks,} = taskSlice.actions;
+export const {addTask,deleteTask,setEditId,clearTasks,loginval} = taskSlice.actions;
 export default taskSlice.reducer;

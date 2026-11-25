@@ -1,47 +1,44 @@
 import "./Table.css";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteTask, setEditId } from "../../features/task/taskSlice";
+import { deleteTask, setEditId,loginval,clearTasks } from "../../features/task/taskSlice";
 import type { RootState } from "../../app/store";
+import { useNavigate } from "react-router-dom";
 
 import Editbtn from "../../assets/edit.svg";
 import Deletebtn from "../../assets/delete.svg";
 
 const Table = () => {
   const dispatch = useDispatch();
+  const navigate= useNavigate();
 
-  const { taskitems, editId } = useSelector((state: RootState) => state.task);
+  const { taskitems} = useSelector((state: RootState) => state.task);
 
   const deletetask = (id: string) => {
     return () => {
-      localStorage.removeItem(id);
+      
       dispatch(deleteTask(id));
       dispatch(setEditId(null));
     };
   };
-
-  useEffect(() => {
-    if (editId) {
-      console.log("edit clicked for " + localStorage.getItem(editId));
-
-      const task = taskitems[editId];
-
-      if (task) {
-        (document.getElementById("taskname") as HTMLInputElement).value =task.taskname;
-
-        (document.getElementById("date") as HTMLInputElement).value = task.date;
-
-        (document.getElementById("time") as HTMLInputElement).value = task.time;
-
-        (document.getElementById("status") as HTMLSelectElement).value =task.status;
-
-        (document.getElementById("description") as HTMLTextAreaElement).value =task.description;
-      }
-    }
-  }, [editId, taskitems]);
-
+  const clearall = () => {
+   dispatch(clearTasks());
+  }
+  const backpage = () => {
+    navigate("/");
+    //navigate(-1);
+  }
+const logout=()=>{
+  dispatch(loginval());
+  navigate('/');
+}
   return (
     <div className="tablebody">
+      <div className="buttons">
+      <button className="backbtn" onClick={backpage}>
+        Back
+      </button>
+      <button className="logout" onClick={logout}>Logout</button>
+</div>
       <table className="tablecls">
         <thead>
           <tr className="headrow">
@@ -76,12 +73,12 @@ const Table = () => {
                 </td>
 
                 <td>
-                  <button className="editbtn"onClick={() => dispatch(setEditId(id))}>
+                  <button className="editbtn"onClick={() => {dispatch(setEditId(id));navigate("/");}}>
                     <img src={Editbtn} alt="edit"
                       style={{height: "20px",width: "20px"}}
                     />
                   </button>
-
+                 
                   <button className="deletebtn" onClick={deletetask(id)}>
                     <img src={Deletebtn} alt="delete"
                       style={{height: "20px",width: "20px"}}
@@ -93,6 +90,7 @@ const Table = () => {
           })}
         </tbody>
       </table>
+      <button className="clrbtn" onClick={clearall}>Clear all</button>
     </div>
   );
 };

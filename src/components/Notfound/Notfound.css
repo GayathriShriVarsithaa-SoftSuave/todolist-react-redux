@@ -1,0 +1,13 @@
+.notfound{
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    margin-top: 100px;
+}
+.homebtn{
+  border: 0px;
+  height: 45px;
+  border-radius: 7px;
+  background-color: rgb(66, 191, 233);
+  color: white;
+}
